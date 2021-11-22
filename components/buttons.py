@@ -7,17 +7,19 @@ class Buttons(BasePage):
 
     def check_button_visibility(self, how, what, btn):
         if self.is_element_present(how, what):
-            print(f'{btn} - button is visible!!!')
+            return True
         else:
-            print(f'{btn} button is not visible!!!')
+            return False
 
     def check_button_caption(self, how, what, btn, caption):
         if self.is_element_present(how, what):
             button_caption = self.browser.find_element(how, what).text
             if is_element_equal(button_caption, caption):
                 print(f'Caption of {btn} button is CORRECT.')
+                return True
             else:
                 print(f'!!!!! Caption of {btn} button is INCORRECT.')
+                return False
         else:
             print(f'{btn} button is not visible!!!')
 
@@ -27,9 +29,9 @@ class Buttons(BasePage):
             color_hex = Color.from_string(button_color).hex
             print(f'{btn} - button\'s color is - {color_hex}...')
             if is_element_equal(color_hex, color):
-                print(f'Color of {btn} button is CORRECT.')
+                return True
             else:
-                print(f'!!!!! Color of {btn} button is INCORRECT.')
+                return False
         else:
             print(f'{btn} button is not visible!!!')
 
