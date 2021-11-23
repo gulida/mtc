@@ -2,6 +2,7 @@ from selenium.webdriver.common.by import By
 
 
 class UserCabinetLocators():
+    GENDER = (By.NAME, 'idSex')
     DATE_ISSUE = (By.NAME, 'dateIssue')
     TAB_MENU_CABINET = (By.XPATH, '//*[@id="full-width-tab-2"]')
     SIDE_MENU_USER_CABINET = (By.XPATH, '//*[@id="root"]/div/div[1]/div/div/div/div[2]/ul/div/li/a')

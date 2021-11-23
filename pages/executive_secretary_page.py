@@ -1,10 +1,9 @@
-from selenium.webdriver.common.by import By
-
 from ..locators.executive_secretary_locators import ExecutiveSecretaryLocators
-from .base_page import BasePage
+from ..components.buttons import Buttons
+from ..components.text_box import TextBox
 
 
-class ExecutiveSecretaryPage(BasePage):
+class ExecutiveSecretaryPage(Buttons, TextBox):
     def open_new_case_add_steps(self):
         if self.is_element_present(*ExecutiveSecretaryLocators.MENU_CLAIM):
             menu_link = self.browser.find_element(*ExecutiveSecretaryLocators.MENU_CLAIM)

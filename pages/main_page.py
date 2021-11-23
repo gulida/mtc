@@ -14,27 +14,27 @@ class MainPage(Buttons, TextBox):
         self.click_button(*MainPageLocators.LOGIN_BUTTON, 'LOGIN BUTTON')
 
     def test_login_button_visibility(self):
-        self.check_button_visibility(*MainPageLocators.LOGIN_BUTTON, 'LOGIN BUTTON')
+        self.check_button_visibility(*MainPageLocators.LOGIN_BUTTON)
 
     def test_login_button_caption(self):
         self.check_button_caption(*MainPageLocators.LOGIN_BUTTON, 'LOGIN BUTTON', 'SIGN IN')
 
     def test_login_button_color(self):
-        self.check_button_color(*MainPageLocators.LOGIN_BUTTON, 'LOGIN BUTTON')
+        self.check_button_color(*MainPageLocators.LOGIN_BUTTON, 'LOGIN BUTTON', '#3f51b5')
 
     def test_username_field_visibility(self):
-        self.check_text_box_visibility(*MainPageLocators.USERNAME, 'USERNAME FIELD')
+        self.check_textbox_visibility(*MainPageLocators.USERNAME)
 
     def test_username_sent_text(self):
-        self.send_text(*MainPageLocators.USERNAME, '', 'USERNAME')
+        self.set_textbox_value(*MainPageLocators.USERNAME, '', 'USERNAME')
         # self.send_text(*MainPageLocators.USERNAME, 'altynbekova@arbitricaccikr.com', 'USERNAME')
-        self.send_text(*MainPageLocators.PASSWORD, '1111', 'PASSWORD')
+        self.set_textbox_value(*MainPageLocators.PASSWORD, '1111', 'PASSWORD')
 
     def test_username_check_text(self):
-        self.check_text(*MainPageLocators.USERNAME, 'USERNAME')
+        self.check_textbox_value(*MainPageLocators.USERNAME, 'altynbekova', 'USERNAME')
 
     def test_username_check_text_box_color(self):
-        self.check_color_of_text_box(*MainPageLocators.USERNAME_FIELD, 'USERNAME', ' ')
+        self.check_textbox_color_of_element(*MainPageLocators.USERNAME_FIELD, 'USERNAME', ' ')
 
     def test_username_check_error_msg(self):
-        self.check_error_msg(*MainPageLocators.USERNAME_ERROR_MSG, 'USERNAME', 'E-mail addess is required')
+        self.check_textbox_error_msg(*MainPageLocators.USERNAME_ERROR_MSG, 'USERNAME', 'E-mail address is required')

@@ -5,33 +5,25 @@ from selenium.webdriver.support.color import Color
 
 class Buttons(BasePage):
 
-    def check_button_visibility(self, how, what, btn):
+    def check_button_visibility(self, how, what):
         if self.is_element_present(how, what):
             return True
         else:
             return False
 
-    def check_button_caption(self, how, what, btn, caption):
+    def check_button_caption(self, how, what, caption, btn):
         if self.is_element_present(how, what):
             button_caption = self.browser.find_element(how, what).text
-            if is_element_equal(button_caption, caption):
-                print(f'Caption of {btn} button is CORRECT.')
-                return True
-            else:
-                print(f'!!!!! Caption of {btn} button is INCORRECT.')
-                return False
+            return is_element_equal(button_caption, caption)
         else:
             print(f'{btn} button is not visible!!!')
 
-    def check_button_color(self, how, what, btn, color):
+    def check_button_color(self, how, what, color, btn):
         if self.is_element_present(how, what):
             button_color = self.browser.find_element(how, what).value_of_css_property('background-color')
             color_hex = Color.from_string(button_color).hex
             print(f'{btn} - button\'s color is - {color_hex}...')
-            if is_element_equal(color_hex, color):
-                return True
-            else:
-                return False
+            return is_element_equal(color_hex, color)
         else:
             print(f'{btn} button is not visible!!!')
 
