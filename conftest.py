@@ -1,12 +1,14 @@
 import pytest
 from selenium import webdriver
-from selenium.webdriver.chrome import options
 from selenium.webdriver.chrome.options import Options
 
+
 def pytest_addoption(parser):
-    parser.addoption('--language', action='store', default='ru', help='Choose language: en or ru')
+    parser.addoption('--language', action='store', default='ru-RU', help='Choose language: en-US or ru-RU')
+
 
 @pytest.fixture(scope="function")
+# def browser():
 def browser(request):
     language = request.config.getoption('language')
     options = Options()
@@ -15,6 +17,6 @@ def browser(request):
     browser = webdriver.Chrome()
     browser.maximize_window()
     yield browser
-    browser.get_screenshot_as_file('capture.png')
+    # browser.get_screenshot_as_file('capture.png')
     print("\nQuit browser ...")
     browser.quit()

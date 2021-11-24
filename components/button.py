@@ -3,13 +3,10 @@ from ..pages.base_page import is_element_equal
 from selenium.webdriver.support.color import Color
 
 
-class Buttons(BasePage):
+class Button(BasePage):
 
     def check_button_visibility(self, how, what):
-        if self.is_element_present(how, what):
-            return True
-        else:
-            return False
+        return self.is_element_present(how, what)
 
     def check_button_caption(self, how, what, caption, btn):
         if self.is_element_present(how, what):

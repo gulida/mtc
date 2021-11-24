@@ -1,11 +1,11 @@
 from ..locators.main_page_locators import MainPageLocators
 from ..variables.main_page_variables import MainPageVariables
 
-from ..components.buttons import Buttons
+from ..components.button import Button
 from ..components.text_box import TextBox
 
 
-class MainPage(Buttons, TextBox):
+class MainPage(Button, TextBox):
     def test_log_in_system(self):
         username = self.browser.find_element(*MainPageLocators.USERNAME)
         username.send_keys(*MainPageVariables.username)

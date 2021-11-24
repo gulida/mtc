@@ -34,7 +34,6 @@ class LookUp(BasePage):
     def select_lookup_element(self, how, what, value, element):
         if self.is_element_present(how, what):
             select = Select(self.browser.find_element(how, what))
-            # select by visible text
             select.select_by_visible_text(value)
         else:
             print(f'{element} look up element is not visible!!!')
@@ -42,7 +41,6 @@ class LookUp(BasePage):
     def lookup_select_empty_element(self, how, what, value, element):
         if self.is_element_present(how, what):
             select = Select(self.browser.find_element(how, what))
-            # select by visible text
             select.select_by_value(value)
         else:
             print(f'{element} look up element is not visible!!!')
@@ -50,9 +48,10 @@ class LookUp(BasePage):
     def check_lookup_error_msg(self, how, what, msg, element):
         if self.is_element_present(how, what):
             error_text = self.browser.find_element(how, what).text
+            print('ERROR: ', error_text)
             return is_element_equal(error_text, msg)
         else:
-            print(f'{element} look up element is not visible!!!')
+            print(f'{element} look up error message is not visible!!!')
 
     def check_lookup_color_of_element(self, how, what, color, element):
         if self.is_element_present(how, what):

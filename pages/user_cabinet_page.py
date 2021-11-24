@@ -2,13 +2,13 @@ import time
 
 from ..locators.user_cabinet_locators import UserCabinetLocators
 
-from ..components.buttons import Buttons
+from ..components.button import Button
 from ..components.text_box import TextBox
 from ..components.check_box import CheckBox
 from ..components.look_up import LookUp
 
 
-class UserCabinetPage(Buttons, TextBox, CheckBox, LookUp):
+class UserCabinetPage(Button, TextBox, CheckBox, LookUp):
     def test_open_user_cabinet(self):
         self.click_button(*UserCabinetLocators.TAB_MENU_CABINET, 'TAB MENU CABINET')
         time.sleep(5)
@@ -44,13 +44,16 @@ class UserCabinetPage(Buttons, TextBox, CheckBox, LookUp):
             time.sleep(1)
         time.sleep(1)
         self.open_close_look_up(*UserCabinetLocators.GENDER, 'GENDER')
+        time.sleep(3)
+        self.open_close_look_up(*UserCabinetLocators.GENDER, 'GENDER')
         time.sleep(1)
         self.lookup_select_empty_element(*UserCabinetLocators.GENDER, '0', 'GENDER')
-        time.sleep(1)
-        if self.check_lookup_error_msg(*UserCabinetLocators.GENDER, '', 'GENDER'):
+        time.sleep(2)
+        if self.check_lookup_error_msg(*UserCabinetLocators.GENDER_ERROR, 'Choose the gender', 'GENDER'):
             print('Error msg - OK')
         else:
             print('Error msg - NOT')
+        time.sleep(2)
 
-        self.open_close_look_up(*UserCabinetLocators.GENDER, 'GENDER')
+
 

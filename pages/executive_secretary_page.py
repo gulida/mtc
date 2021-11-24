@@ -1,9 +1,9 @@
 from ..locators.executive_secretary_locators import ExecutiveSecretaryLocators
-from ..components.buttons import Buttons
+from ..components.button import Button
 from ..components.text_box import TextBox
 
 
-class ExecutiveSecretaryPage(Buttons, TextBox):
+class ExecutiveSecretaryPage(Button, TextBox):
     def open_new_case_add_steps(self):
         if self.is_element_present(*ExecutiveSecretaryLocators.MENU_CLAIM):
             menu_link = self.browser.find_element(*ExecutiveSecretaryLocators.MENU_CLAIM)
