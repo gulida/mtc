@@ -1,6 +1,5 @@
 import time
 
-from ..base.base import form_inputs
 from ..locators.tracker_gender_grid_locators import TrackerGenderLocators
 from ..variables.tracker_gender_grid_variables import TrackerGenderVariables
 
@@ -23,9 +22,27 @@ class TrackerGenderPage(GridComponent):
 
         table_name = self.get_table_name(*TrackerGenderLocators.TABLE_NAME, 'GENDER')
 
-        self.click_button(*TrackerGenderLocators.ADD_BUTTON, 'GENDER ADD BUTTON')
-        time.sleep(3)
+        # Adding data to the table
+        if len(data):
+            print('This value is already exists in the table!!!')
+        else:
+            self.click_button(*TrackerGenderLocators.ADD_BUTTON, 'GENDER ADD BUTTON')
+            time.sleep(3)
+            self.add_edit_catalog_data(*TrackerGenderLocators.SAVE_BUTTON, self.gender_data, table_name)
+        time.sleep(2)
 
-        self.add_edit_catalog_data(*TrackerGenderLocators.SAVE_BUTTON, self.gender_data, table_name)
-
-        time.sleep(5)
+        # Editing a table entry
+        if len(data):
+            buttons = self.get_column_action_buttons(*TrackerGenderLocators.EDIT_BUTTON)
+            for i in range(len(data)):
+                if data[i] == self.gender_data['search_data']:
+                    buttons[i].click()
+                    time.sleep(3)
+                    self.add_edit_catalog_data(*TrackerGenderLocators.SAVE_BUTTON, self.gender_data, table_name)
+                    print('Entry was edited!')
+                    time.sleep(4)
+                    break
+                else:
+                    print('Nothing was edited!!!')
+            time.sleep(2)
+            print('BUTTONS LENGTH: ', len(buttons))

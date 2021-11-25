@@ -14,6 +14,7 @@ class TrackerGenderLocators():
     ADD_BUTTON = (By.NAME, 'Sex.add')
     CANCEL_BUTTON = (By.NAME, 'SexAddEditView.cancel')
     SAVE_BUTTON = (By.NAME, 'SexAddEditView.save')
+    EDIT_BUTTON = (By.NAME, 'Sex.edit')
 
     NAME = (By.NAME, 'name')
     DESCRIPTION = (By.NAME, 'description')
