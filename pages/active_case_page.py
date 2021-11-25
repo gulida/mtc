@@ -1,11 +1,11 @@
 import time
 
-from .base_page import BasePage
+from components.button import Button
 from ..locators.active_case_locators import ActiveCaseLocators
 from ..variables.active_case_variables import ActiveCaseVariables
 
 
-class ActiveCasePage(BasePage):
+class ActiveCasePage(Button):
 
     def edit_plaintiff_person_form(self):
         self.click_button(*ActiveCaseLocators.PLAINTIFF_BLOCK, 'PLAINTIFF BLOCK OPEN')

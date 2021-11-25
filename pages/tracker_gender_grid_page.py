@@ -1,56 +1,31 @@
 import time
 
+from ..base.base import form_inputs
 from ..locators.tracker_gender_grid_locators import TrackerGenderLocators
+from ..variables.tracker_gender_grid_variables import TrackerGenderVariables
 
-from ..components.button import Button
-from ..components.text_box import TextBox
+from ..components.grid_component import GridComponent
 
 
-class TrackerGenderPage(Button, TextBox):
+class TrackerGenderPage(GridComponent):
     table = 'OF SEX TABLE'
+    table_name = 'NO NAME'
 
-    def test_gender_table(self, value):
+    gender_data = TrackerGenderVariables.gender_data
+
+    def test_gender_table(self):
         self.click_button(*TrackerGenderLocators.SEARCH_BUTTON, f'SEARCH BUTTON {self.table}')
         time.sleep(2)
-        self.set_textbox_value(*TrackerGenderLocators.SEARCH_INPUT, value, f'SEARCH INPUT {self.table}')
-        time.sleep(2)
+        # SEARCH IN TABLE
+        data = self.search_from_table(*TrackerGenderLocators.SEARCH_INPUT, *TrackerGenderLocators.TABLE_DATA_NAME,
+                                      self.gender_data['search_data'], 'GENDER')
+        print('FOUND DATA IN NAME COLUMN: ', data)
 
-        columns = []
+        table_name = self.get_table_name(*TrackerGenderLocators.TABLE_NAME, 'GENDER')
 
-        # TABLE NAME
-        if self.is_element_present(*TrackerGenderLocators.TABLE_NAME):
-            table_name = self.browser.find_element(*TrackerGenderLocators.TABLE_NAME).text
-            print('Table name: ', table_name)
-        else:
-            print('Can not find table name')
+        self.click_button(*TrackerGenderLocators.ADD_BUTTON, 'GENDER ADD BUTTON')
+        time.sleep(3)
 
-        # TABLE COLUMN TITLES
-        table_columns = self.browser.find_elements(*TrackerGenderLocators.TABLE_HEAD_TITLES)
-        column_count = len(table_columns)
+        self.add_edit_catalog_data(*TrackerGenderLocators.SAVE_BUTTON, self.gender_data, table_name)
 
-        for e in table_columns:
-            columns.append(e.text)
-
-        print('Column count: ', column_count)
-        print('Columns: ', columns)
-
-        # TABLE DATA
-        names_data = []
-        table_data_name = self.browser.find_elements(*TrackerGenderLocators.TABLE_DATA_NAME)
-        data_count = len(table_data_name)
-
-        for data in table_data_name:
-            names_data.append(data.text)
-
-        print('NAMES: ', names_data)
-        print('NAMES COUNT: ', data_count)
-
-        if data_count:
-            print('This value already exists!!!')
-        else:
-            print('You can add this value in the table!!!')
-
-        # if names_data.count(value) == 0:
-        #     print('You can add this value in the table!!!')
-        # else:
-        #     print('This value already exists!!!')
+        time.sleep(5)

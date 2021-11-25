@@ -1,6 +1,7 @@
 import time
 
 from selenium.common.exceptions import NoSuchElementException
+from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support.select import Select
 
@@ -14,7 +15,11 @@ def is_element_equal(element, equal_to):
         return False
 
 
-class BasePage():
+def form_inputs(input_name):
+    return (By.ID, input_name)
+
+
+class Base():
     def __init__(self, browser, url, timeout=10):
         self.browser = browser
         self.url = url
@@ -29,6 +34,7 @@ class BasePage():
         except NoSuchElementException:
             return False
         return True
+
     # Forms
     def fill_in_edit_person_form(self, person_info):
         try:

@@ -1,9 +1,7 @@
-from ..pages.base_page import BasePage
-from ..pages.base_page import is_element_equal
-from selenium.webdriver.support.color import Color
+from ..base.base import Base
 
 
-class Card(BasePage):
+class Card(Base):
 
     def check_card_visibility(self, how, what):
         return self.is_element_present(how, what)

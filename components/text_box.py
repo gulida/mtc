@@ -1,11 +1,13 @@
 import time
 
-from ..pages.base_page import BasePage
-from ..pages.base_page import is_element_equal
+from selenium.webdriver.common.keys import Keys
+
+from ..base.base import Base
+from ..base.base import is_element_equal
 from selenium.webdriver.support.color import Color
 
 
-class TextBox(BasePage):
+class TextBox(Base):
     def check_textbox_visibility(self, how, what):
         if self.is_element_present(how, what):
             return True
@@ -15,7 +17,9 @@ class TextBox(BasePage):
     def set_textbox_value(self, how, what, text, element):
         if self.is_element_present(how, what):
             text_field = self.browser.find_element(how, what)
-            time.sleep(3)
+            time.sleep(2)
+            text_field.send_keys(Keys.CONTROL, "a")
+            time.sleep(1)
             text_field.send_keys(text)
         else:
             print(f'{element} - field is not visible...')

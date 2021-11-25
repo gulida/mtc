@@ -1,11 +1,11 @@
 import time
 
-from ..pages.base_page import BasePage
+from ..base.base import Base
 from ..locators.new_case_locators import NewCaseLocators
 from selenium.common.exceptions import NoSuchElementException
 
 
-class FillInPersonForm(BasePage):
+class FillInPersonForm(Base):
 
     def fill_in_person_form(self, person_info):
         try:

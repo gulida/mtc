@@ -1,11 +1,11 @@
 from selenium.webdriver.support.color import Color
 from selenium.webdriver.support.select import Select
 
-from ..pages.base_page import BasePage
-from ..pages.base_page import is_element_equal
+from ..base.base import Base
+from ..base.base import is_element_equal
 
 
-class LookUp(BasePage):
+class LookUp(Base):
     def check_lookup_visibility(self, how, what):
         if self.is_element_present(how, what):
             return True

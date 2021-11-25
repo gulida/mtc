@@ -1,8 +1,8 @@
-from ..pages.base_page import BasePage
-from ..pages.base_page import is_element_equal
+from ..base.base import Base
+from ..base.base import is_element_equal
 
 
-class CheckBox(BasePage):
+class CheckBox(Base):
 
     def check_checkbox_visibility(self, how, what):
         if self.is_element_present(how, what):
