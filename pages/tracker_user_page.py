@@ -9,3 +9,6 @@ class TrackerUserPage(Button):
 
     def test_open_gender_table(self):
         self.click_button(*TrackerUserPageLocators.GENDER, 'MENU GENDER')
+
+    def test_open_person_table(self):
+        self.click_button(*TrackerUserPageLocators.PERSON, 'MENU PERSON')

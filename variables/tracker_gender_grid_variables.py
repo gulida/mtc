@@ -1,7 +1,7 @@
 class TrackerGenderVariables():
     gender_data = {
-        'search_data': 'aaa',
-        'SexName': '###',
-        'SexDescription': ' ',
-        'SexCode': ' '
+        'search_data': 'admin',
+        'SexName': 'admin',
+        'SexDescription': '111',
+        'SexCode': '111'
     }

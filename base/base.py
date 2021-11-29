@@ -19,6 +19,21 @@ def form_inputs(input_name):
     return (By.ID, input_name)
 
 
+def is_linking_element_present(linking_element, how, what):
+    try:
+        linking_element.find_element(how, what)
+    except NoSuchElementException:
+        return False
+    return True
+
+
+def linking_element(how, what, element):
+    if is_linking_element_present(element, how, what):
+        return element.find_element(how, what)
+    else:
+        print(f'{element} - linking element is not visible!')
+
+
 class Base():
     def __init__(self, browser, url, timeout=10):
         self.browser = browser
