@@ -1,3 +1,5 @@
+import time
+
 from selenium.webdriver.support.color import Color
 from selenium.webdriver.support.select import Select
 
@@ -7,15 +9,13 @@ from ..base.base import is_element_equal
 
 class LookUp(Base):
     def check_lookup_visibility(self, how, what):
-        if self.is_element_present(how, what):
-            return True
-        else:
-            return False
+        return self.is_element_present(how, what)
 
     def open_close_look_up(self, how, what, element):
         if self.is_element_present(how, what):
             look_up = self.browser.find_element(how, what)
             look_up.click()
+            time.sleep(1)
             print(f'{element} - look up element was pressed...')
         else:
             print(f'{element} look up element is not visible!!!')
@@ -34,21 +34,24 @@ class LookUp(Base):
     def select_lookup_element(self, how, what, value, element):
         if self.is_element_present(how, what):
             select = Select(self.browser.find_element(how, what))
+            time.sleep(2)
             select.select_by_visible_text(value)
+            time.sleep(1)
         else:
             print(f'{element} look up element is not visible!!!')
 
     def lookup_select_empty_element(self, how, what, value, element):
         if self.is_element_present(how, what):
             select = Select(self.browser.find_element(how, what))
+            time.sleep(2)
             select.select_by_value(value)
+            time.sleep(1)
         else:
             print(f'{element} look up element is not visible!!!')
 
     def check_lookup_error_msg(self, how, what, msg, element):
         if self.is_element_present(how, what):
             error_text = self.browser.find_element(how, what).text
-            print('ERROR: ', error_text)
             return is_element_equal(error_text, msg)
         else:
             print(f'{element} look up error message is not visible!!!')

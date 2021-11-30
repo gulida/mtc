@@ -9,13 +9,6 @@ from ..base.base import is_linking_element_present
 from selenium.webdriver.support.color import Color
 
 
-# def linking_element(how, what, element):
-#     if is_linking_element_present(element, how, what):
-#         return element.find_element(how, what)
-#     else:
-#         print(f'{element} - linking element is not visible!')
-
-
 class TextBox(Base):
     def check_textbox_visibility(self, how, what):
         return self.is_element_present(how, what)

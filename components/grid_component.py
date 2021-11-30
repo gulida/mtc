@@ -28,6 +28,10 @@ class GridComponent(TextBox, Button):
             data.append(e.text)
         return data
 
+    def get_table_entries_count(self, how, what):
+        data = self.get_column_data(how, what)
+        return len(data)
+
     def get_column_action_buttons(self, how, what):
         buttons = []
         found_buttons = self.browser.find_elements(how, what)
@@ -146,32 +150,42 @@ class GridComponent(TextBox, Button):
             print(f'{table_name} table does not have SEARCH BUTTON...')
 
     # ADD & EDIT
+    # How it works:
+    # data - json (dictionary in python) where you have new data
     def add_edit_catalog_data(self, how, what, data, element):
         keys = data.keys()
         for key in keys:
             self.set_textbox_value(*form_inputs(key), data[key], element + '_' + str(key))
         time.sleep(2)
         self.click_button(how, what, element)
+        time.sleep(3)
 
-    def add_table_entry(self, column_data, how_add_btn, what_add_btn, new_entry_data, how_save_btn, what_save_btn,
-                        table_name):
+    # How it works:
+    # column_data = self.search_from_table()
+    # how_add_btn, what_add_btn - ADD BUTTON
+    # new_entry_data - json (dictionary in python)  where you have new data
+    # how_save_btn, what_save_btn - SAVE BUTTON of catalog form
+    def add_catalog_table_entry(self, column_data, how_add_btn, what_add_btn, new_entry_data, how_save_btn,
+                                what_save_btn,
+                                table_name):
         add_flag = True
         if len(column_data):
-            print('++++++++++')
             for i in range(len(column_data)):
                 if column_data[i] == new_entry_data['search_data']:
                     print('This value is already exists in the table!!!')
                     add_flag = False
                     break
         if add_flag:
-            print('$$$$$$$$$$$$$$$')
             self.click_button(how_add_btn, what_add_btn, f'{table_name} ADD BUTTON')
             time.sleep(3)
             self.add_edit_catalog_data(how_save_btn, what_save_btn, new_entry_data, table_name)
-        print('OK')
 
-    def edit_table_entry(self, column_data, column_data_collection,
-                         correct_data, how_save_btn, what_save_btn, table_name):
+    # How it works:
+    # column_data = self.search_from_table()
+    # column_data_collection = self.search_from_table_for_edit_delete()
+    # correct_data - json (dictionary in python)  where you have search data and new data
+    def edit_catalog_table_entry(self, column_data, column_data_collection,
+                                 correct_data, how_save_btn, what_save_btn, table_name):
         if len(column_data):
             message_flag = True
             break_flag = False
@@ -209,6 +223,53 @@ class GridComponent(TextBox, Button):
         else:
             print(f'{table_name} table does not have any entries to edit.')
 
+    # How it works:
+    # column_data = self.search_from_table()
+    # column_data_collection = self.search_from_table_for_edit_delete()
+    # search data - string
+    def press_edit_button_of_table_entry(self, column_data, column_data_collection,
+                                         search_data, table_name):
+        if len(column_data):
+            message_flag = True
+            break_flag = False
+            for keys, items in column_data_collection.items():
+                full_string = self.browser.find_element(*TrackerCommonLocators.SHOWED_ITEM_COUNT).text
+                showed_item_count = full_string.split('-')[0]
+                while int(keys) != int(showed_item_count):
+                    if int(keys) < int(showed_item_count):
+                        back_arrow = self.browser.find_element(*TrackerCommonLocators.PAGINATION_BACK_BUTTON)
+                        back_arrow.click()
+                        time.sleep(2)
+                        full_string = self.browser.find_element(*TrackerCommonLocators.SHOWED_ITEM_COUNT).text
+                        showed_item_count = full_string.split('-')[0]
+                    elif int(keys) > int(showed_item_count):
+                        next_arrow = self.browser.find_element(*TrackerCommonLocators.PAGINATION_NEXT_BUTTON)
+                        next_arrow.click()
+                        time.sleep(2)
+                        full_string = self.browser.find_element(*TrackerCommonLocators.SHOWED_ITEM_COUNT).text
+                        showed_item_count = full_string.split('-')[0]
+                for i in range(len(items[0])):
+                    if items[0][i] == search_data:
+                        items[1][i].click()
+                        time.sleep(3)
+                        print(f'Edit button of {table_name} table entry\'s was pressed!')
+                        message_flag = False
+                        time.sleep(1)
+                        break_flag = True
+                        break
+                if break_flag:
+                    break
+
+            if message_flag:
+                print('Nothing was pressed!!!')
+        else:
+            print(f'{table_name} table does not have any entries to edit.')
+
+    # How it works:
+    # column_data = self.search_from_table()
+    # column_data_collection = self.search_from_table_for_edit_delete()
+    # search data - string
+    # how_alert_ok_btn, what_alert_ok_btn - ACCEPT BUTTON on dialog window
     def delete_table_entry(self, column_data, column_data_collection, search_data, how_alert_ok_btn,
                            what_alert_ok_btn, table_name):
         if len(column_data):
@@ -247,15 +308,15 @@ class GridComponent(TextBox, Button):
         else:
             print(f'{table_name} table does not have any entries to delete.')
 
-    def get_count_of_entry(self, how_search_btn, what_search_btn,
-                           how_search_input, what_search_input,
-                           search_area_how, search_area_what,
-                           search_data, table_name):
+    def get_count_of_entry_by_search(self, how_search_btn, what_search_btn,
+                                     how_search_input, what_search_input,
+                                     search_area_how, search_area_what,
+                                     search_data, table_name):
         count = 0
         column_data = self.search_from_table(how_search_btn, what_search_btn,
                                              how_search_input, what_search_input,
-                                             # how_input_close, what_input_close,
-                                             search_area_how, search_area_what, search_data, table_name)
+                                             search_area_how, search_area_what,
+                                             search_data, table_name)
         if len(column_data):
             for i in range(len(column_data)):
                 if column_data[i] == search_data:

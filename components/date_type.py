@@ -11,11 +11,11 @@ class DateType(Base):
     def check_visibility(self, how, what):
         return self.is_element_present(how, what)
 
-    def set_date_field_value(self, how, what, data, element):
+    def set_date_field_value(self, how, what, date_data, element):
         if self.is_element_present(how, what):
             date_field = self.browser.find_element(how, what)
             time.sleep(2)
-            date_field.send_keys(data)
+            date_field.send_keys(date_data) # date_data format: 'mm-dd-yyyy'
         else:
             print(f'{element} - field is not visible...')
 
@@ -36,8 +36,7 @@ class DateType(Base):
         else:
             print(f'{element} - field is not visible...')
 
-        # Error message functions
-
+    # Error message functions
     def date_type_field(self, how, what, element):
         if self.is_element_present(how, what):
             return self.browser.find_element(how, what)
