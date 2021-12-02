@@ -153,6 +153,7 @@ class GridComponent(TextBox, Button):
     # How it works:
     # data - json (dictionary in python) where you have new data
     def add_edit_catalog_data(self, how, what, data, element):
+        data.pop('search_data')
         keys = data.keys()
         for key in keys:
             self.set_textbox_value(*form_inputs(key), data[key], element + '_' + str(key))
@@ -180,7 +181,7 @@ class GridComponent(TextBox, Button):
             time.sleep(2)
             self.add_edit_catalog_data(how_save_btn, what_save_btn, new_entry_data, 'SAVE')
             print(f'New entry was added to {table_name} table!')
-            time.sleep(1)
+            time.sleep(300)
 
 
     # How it works:

@@ -17,6 +17,6 @@ def test_add_entry(browser):
     time.sleep(4)
     file_type_page = TrackerFileTypePage(browser, browser.current_url)
     file_type_page.test_file_type_add_entry()
-    go_back = TrackerFileTypePage(browser, 'http://194.87.102.173:4105/user/FileType')
-    go_back.open()
+    # go_back = TrackerFileTypePage(browser, 'http://194.87.102.173:4105/user/FileType')
+    # go_back.open()
     time.sleep(3)
