@@ -1,3 +1,5 @@
+import time
+
 from ..base.base import Base
 
 
@@ -16,8 +18,6 @@ def press_card_edit_button(card_collection, card_title):
             print(f'Could not find card with {card_title} title!')
     else:
         print('There is no card to edit!')
-
-    # def delete_card
 
 
 class Card(Base):
@@ -59,3 +59,25 @@ class Card(Base):
             return collection
         else:
             print(f'{card_name} - does not exist!')
+
+    # How it works:
+    # card_collection = self.get_base_card_collection_with_title_edit_delete()
+    # card_title - string
+    def delete_card(self, card_collection, card_title, how_accept_btn, what_cancel_btn):
+        message_flag = True
+        if len(card_collection):
+            for item in card_collection.values():
+                if item['title'] == card_title:
+                    item['delete'].click()
+                    time.sleep(3)
+                    button = self.browser.find_element(how_accept_btn, what_cancel_btn)
+                    time.sleep(2)
+                    button.click()
+                    time.sleep(3)
+                    message_flag = False
+                    break
+            if message_flag:
+                print(f'Could not find card with {card_title} title!')
+        else:
+            print('There is no card to delete!')
+        time.sleep(3)

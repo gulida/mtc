@@ -158,15 +158,15 @@ class GridComponent(TextBox, Button):
             self.set_textbox_value(*form_inputs(key), data[key], element + '_' + str(key))
         time.sleep(2)
         self.click_button(how, what, element)
-        time.sleep(3)
+        time.sleep(2)
 
     # How it works:
     # column_data = self.search_from_table()
     # how_add_btn, what_add_btn - ADD BUTTON
     # new_entry_data - json (dictionary in python)  where you have new data
     # how_save_btn, what_save_btn - SAVE BUTTON of catalog form
-    def add_catalog_table_entry(self, column_data, how_add_btn, what_add_btn, new_entry_data, how_save_btn,
-                                what_save_btn,
+    def add_catalog_table_entry(self, column_data, how_add_btn, what_add_btn,
+                                new_entry_data, how_save_btn, what_save_btn,
                                 table_name):
         add_flag = True
         if len(column_data):
@@ -177,8 +177,11 @@ class GridComponent(TextBox, Button):
                     break
         if add_flag:
             self.click_button(how_add_btn, what_add_btn, f'{table_name} ADD BUTTON')
-            time.sleep(3)
-            self.add_edit_catalog_data(how_save_btn, what_save_btn, new_entry_data, table_name)
+            time.sleep(2)
+            self.add_edit_catalog_data(how_save_btn, what_save_btn, new_entry_data, 'SAVE')
+            print(f'New entry was added to {table_name} table!')
+            time.sleep(1)
+
 
     # How it works:
     # column_data = self.search_from_table()
@@ -209,7 +212,7 @@ class GridComponent(TextBox, Button):
                     if items[0][i] == correct_data['search_data']:
                         items[1][i].click()
                         time.sleep(3)
-                        self.add_edit_catalog_data(how_save_btn, what_save_btn, correct_data, table_name)
+                        self.add_edit_catalog_data(how_save_btn, what_save_btn, correct_data, 'SAVE')
                         print(f'{table_name} table\'s entry was edited!')
                         message_flag = False
                         time.sleep(1)
@@ -270,8 +273,8 @@ class GridComponent(TextBox, Button):
     # column_data_collection = self.search_from_table_for_edit_delete()
     # search data - string
     # how_alert_ok_btn, what_alert_ok_btn - ACCEPT BUTTON on dialog window
-    def delete_table_entry(self, column_data, column_data_collection, search_data, how_alert_ok_btn,
-                           what_alert_ok_btn, table_name):
+    def delete_table_entry(self, column_data, column_data_collection, search_data,
+                           how_alert_ok_btn, what_alert_ok_btn, table_name):
         if len(column_data):
             message_flag = True
             break_flag = False

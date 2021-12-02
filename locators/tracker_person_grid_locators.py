@@ -15,11 +15,11 @@ class TrackerPersonLocators():
     USER_NAME = (By.NAME, 'PersonUserName')
 
     # ADD EDIT FORM LOCATORS
-    ADD_BUTTON = (By.NAME, 'Person.add')
+    ADD_BUTTON = (By.NAME, 'PersonAddItem')
     CANCEL_BUTTON = (By.NAME, 'Person.cancel')
     SAVE_BUTTON = (By.NAME, 'Person.save')
-    EDIT_BUTTON = (By.NAME, 'Person.edit')
-    DELETE_BUTTON = (By.NAME, 'Person.delete')
+    EDIT_BUTTON = (By.NAME, 'PersonEditItem')
+    DELETE_BUTTON = (By.NAME, 'PersonDeleteItem')
 
     # Job history block
     JOB_HISTORY_ALL_CARDS = (By.NAME, 'JobHistoryAllCards')

@@ -1,16 +1,17 @@
 import time
 
 from ..locators.tracker_person_grid_locators import TrackerPersonLocators
+from ..locators.tracker_common_locators import TrackerCommonLocators
 from ..variables.tracker_person_grid_variables import TrackerPersonVariables
 
 from ..components.grid_component import GridComponent
 from ..components.card import Card, press_card_edit_button
 from ..components.date_type import DateType
 from ..components.look_up import LookUp
-from ..components.file_type import FileType
+from ..components.file_component import FileComponent
 
 
-class TrackerPersonPage(GridComponent, Card, DateType, LookUp, FileType):
+class TrackerPersonPage(GridComponent, Card, DateType, LookUp, FileComponent):
     table_name = 'PERSON'
 
     search_data = TrackerPersonVariables.person_data['search_data']
@@ -32,7 +33,7 @@ class TrackerPersonPage(GridComponent, Card, DateType, LookUp, FileType):
         time.sleep(3)
         self.press_edit_button_of_table_entry(data, search_data, self.search_data, table_name)
 
-        time.sleep(4)
+        time.sleep(10)
 
         card_titles = self.get_all_card_titles(*TrackerPersonLocators.JOB_HISTORY_CARD_TITLE, 'JOB History')
         print('Titles: ', card_titles)
@@ -43,37 +44,40 @@ class TrackerPersonPage(GridComponent, Card, DateType, LookUp, FileType):
                                                                           *TrackerPersonLocators.JOB_HISTORY_CARD_DELETE_BTN,
                                                                           'Job history')
         print('COLLECTION: ', collection)
-        press_card_edit_button(collection, 'Junior')
+        # press_card_edit_button(collection, 'Junior')
+
         time.sleep(3)
         # Job history form
-        self.set_date_field_value(*TrackerPersonLocators.JOB_HISTORY_DATE_START,
-                                  TrackerPersonVariables.job_history_data['dateStart'],
-                                  'Start')
+        # self.set_date_field_value(*TrackerPersonLocators.JOB_HISTORY_DATE_START,
+        #                           TrackerPersonVariables.job_history_data['dateStart'],
+        #                           'Start')
+        #
+        # self.set_date_field_value(*TrackerPersonLocators.JOB_HISTORY_DATE_FINISH,
+        #                           TrackerPersonVariables.job_history_data['dateFinish'],
+        #                           'Finish')
+        #
+        # self.open_close_look_up(*TrackerPersonLocators.JOB_HISTORY_POSITION, 'Position')
+        # self.select_lookup_element(*TrackerPersonLocators.JOB_HISTORY_POSITION, TrackerPersonVariables.job_history_data['idPost'], 'Position')
+        # self.open_close_look_up(*TrackerPersonLocators.JOB_HISTORY_POSITION, 'Position')
+        #
+        # self.set_file_type_value(*TrackerPersonLocators.JOB_HISTORY_DOCUMENT_FILE,
+        #                          TrackerPersonVariables.job_history_data['idDocumentNavigationName'],
+        #                          'file')
+        #
+        # self.set_textbox_value(*TrackerPersonLocators.JOB_HISTORY_DOCUMENT_DESCRIPTION,
+        #                        TrackerPersonVariables.job_history_data['idDocumentNavdescription'],
+        #                        'file description')
+        #
+        # self.open_close_look_up(*TrackerPersonLocators.JOB_HISTORY_DOCUMENT_FILE_TYPE,
+        #                           TrackerPersonVariables.job_history_data['idDocumentNavidFileType'])
+        # self.select_lookup_element(*TrackerPersonLocators.JOB_HISTORY_DOCUMENT_FILE_TYPE,
+        #                           TrackerPersonVariables.job_history_data['idDocumentNavidFileType'],
+        #                           'file type')
+        # self.open_close_look_up(*TrackerPersonLocators.JOB_HISTORY_DOCUMENT_FILE_TYPE,
+        #                         TrackerPersonVariables.job_history_data['idDocumentNavidFileType'])
+        #
+        # time.sleep(2)
+        # self.click_button(*TrackerPersonLocators.JOB_HISTORY_SAVE_BUTTON, 'Job history save')
 
-        self.set_date_field_value(*TrackerPersonLocators.JOB_HISTORY_DATE_FINISH,
-                                  TrackerPersonVariables.job_history_data['dateFinish'],
-                                  'Finish')
-
-        self.open_close_look_up(*TrackerPersonLocators.JOB_HISTORY_POSITION, 'Position')
-        self.select_lookup_element(*TrackerPersonLocators.JOB_HISTORY_POSITION, TrackerPersonVariables.job_history_data['idPost'], 'Position')
-        self.open_close_look_up(*TrackerPersonLocators.JOB_HISTORY_POSITION, 'Position')
-
-        self.set_file_type_value(*TrackerPersonLocators.JOB_HISTORY_DOCUMENT_FILE,
-                                 TrackerPersonVariables.job_history_data['idDocumentNavigationName'],
-                                 'file')
-
-        self.set_textbox_value(*TrackerPersonLocators.JOB_HISTORY_DOCUMENT_DESCRIPTION,
-                               TrackerPersonVariables.job_history_data['idDocumentNavdescription'],
-                               'file description')
-
-        self.open_close_look_up(*TrackerPersonLocators.JOB_HISTORY_DOCUMENT_FILE_TYPE,
-                                  TrackerPersonVariables.job_history_data['idDocumentNavidFileType'])
-        self.select_lookup_element(*TrackerPersonLocators.JOB_HISTORY_DOCUMENT_FILE_TYPE,
-                                  TrackerPersonVariables.job_history_data['idDocumentNavidFileType'],
-                                  'file type')
-        self.open_close_look_up(*TrackerPersonLocators.JOB_HISTORY_DOCUMENT_FILE_TYPE,
-                                TrackerPersonVariables.job_history_data['idDocumentNavidFileType'])
-
-        time.sleep(2)
-        self.click_button(*TrackerPersonLocators.JOB_HISTORY_SAVE_BUTTON, 'Job history save')
+        self.delete_card(collection, 'asdf', *TrackerCommonLocators.ACCEPT)
         time.sleep(5)

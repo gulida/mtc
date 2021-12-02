@@ -10,12 +10,12 @@ from ..base.base import is_linking_element_present
 from selenium.webdriver.support.color import Color
 
 
-class FileType(Base):
+class FileComponent(Base):
 
-    def check_file_type_visibility(self, how, what):
+    def check_file_component_visibility(self, how, what):
         return self.is_element_present(how, what)
 
-    def set_file_type_value(self, how, what, file_path, element):
+    def set_file_component_value(self, how, what, file_path, element):
         file = os.path.join(file_path)
         if self.is_element_present(how, what):
             file_field = self.browser.find_element(how, what)
