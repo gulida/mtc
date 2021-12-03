@@ -16,4 +16,5 @@ def test_add_entry(browser):
     user_page.test_open_file_type_table()
     time.sleep(4)
     file_type_page = TrackerFileTypePage(browser, browser.current_url)
-    file_type_page.test_file_type_table()
+    file_type_page.test_file_type_add_entry()
+    time.sleep(3)

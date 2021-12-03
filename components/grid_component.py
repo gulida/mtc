@@ -2,11 +2,12 @@ import time
 
 from ..components.text_box import TextBox
 from ..components.button import Button
+from ..components.scroll_to_element import ScrollToElement
 from ..base.base import form_inputs
 from ..locators.tracker_common_locators import TrackerCommonLocators
 
 
-class GridComponent(TextBox, Button):
+class GridComponent(TextBox, Button, ScrollToElement):
 
     def get_table_name(self, how, what, table_name):
         if self.is_element_present(how, what):
@@ -46,6 +47,7 @@ class GridComponent(TextBox, Button):
         found_data_array = []
         # Checking if search input field is available
         if self.is_element_present(how_search_input, what_search_input):
+            self.set_textbox_value(how_search_input, what_search_input, ' ', table_name)
             self.set_textbox_value(how_search_input, what_search_input, search_data, table_name)
             next_arrow_flag = True
             time.sleep(3)
@@ -66,6 +68,7 @@ class GridComponent(TextBox, Button):
             self.click_button(how_search_btn, what_search_btn, 'SEARCH BUTTON')
             time.sleep(2)
             if self.is_element_present(how_search_input, what_search_input):
+                self.set_textbox_value(how_search_input, what_search_input, ' ', table_name)
                 self.set_textbox_value(how_search_input, what_search_input, search_data, table_name)
                 next_arrow_flag = True
                 time.sleep(3)
@@ -96,6 +99,7 @@ class GridComponent(TextBox, Button):
         column_data = {}
         # Checking if search input field is available
         if self.is_element_present(how_search_input, what_search_input):
+            self.set_textbox_value(how_search_input, what_search_input, ' ', table_name)
             self.set_textbox_value(how_search_input, what_search_input, search_data, table_name)
             next_arrow_flag = True
             time.sleep(3)
@@ -122,6 +126,7 @@ class GridComponent(TextBox, Button):
             self.click_button(how_search_btn, what_search_btn, 'SEARCH BUTTON')
             time.sleep(2)
             if self.is_element_present(how_search_input, what_search_input):
+                self.set_textbox_value(how_search_input, what_search_input, ' ', table_name)
                 self.set_textbox_value(how_search_input, what_search_input, search_data, table_name)
                 next_arrow_flag = True
                 time.sleep(3)
@@ -177,12 +182,17 @@ class GridComponent(TextBox, Button):
                     add_flag = False
                     break
         if add_flag:
+            # self.browser.execute_script("window.scrollTo(0, 0);")
+            # element = self.browser.find_element(how_add_btn, what_add_btn)
+            # coordinates = element.location_once_scrolled_into_view  # returns dict of X, Y coordinates
+            # self.browser.execute_script('window.scrollTo({}, {});'.format(coordinates['x'], coordinates['y']))
+            self.scroll_to_component(how_add_btn, what_add_btn)
+            time.sleep(2)
             self.click_button(how_add_btn, what_add_btn, f'{table_name} ADD BUTTON')
             time.sleep(2)
             self.add_edit_catalog_data(how_save_btn, what_save_btn, new_entry_data, 'SAVE')
             print(f'New entry was added to {table_name} table!')
-            time.sleep(300)
-
+            time.sleep(2)
 
     # How it works:
     # column_data = self.search_from_table()

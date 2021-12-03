@@ -12,3 +12,5 @@ class TrackerUserPage(Button):
 
     def test_open_person_table(self):
         self.click_button(*TrackerUserPageLocators.PERSON, 'MENU PERSON')
+
+    # def test_open_document_page(self):

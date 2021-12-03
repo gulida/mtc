@@ -18,10 +18,14 @@ class TrackerFileTypePage(GridComponent):
                                             *TrackerFileTypeLocators.SEARCH_INPUT,
                                             *TrackerFileTypeLocators.COLUMN_DATA_NAME,
                                             self.search_data, table_name)
-        time.sleep(1)
+        time.sleep(15)
         self.add_catalog_table_entry(found_data, *TrackerFileTypeLocators.ADD_BUTTON,
                                      TrackerFileTypeVariables.file_type_data,
                                      *TrackerFileTypeLocators.SAVE_BUTTON, table_name)
+
+        time.sleep(2)
+        # self.click_button(*TrackerFileTypeLocators.SAVE_BUTTON, 'SAVE')
+        # time.sleep(2)
         # self.click_button(*TrackerFileTypeLocators.ADD_BUTTON, 'ADD')
         # time.sleep(2)
         # self.set_textbox_value(*TrackerFileTypeLocators.NAME, 'test', 'NAME FIELD')
@@ -39,7 +43,6 @@ class TrackerFileTypePage(GridComponent):
                                             *TrackerFileTypeLocators.COLUMN_DATA_NAME,
                                             self.search_data, table_name)
         time.sleep(3)
-
         search_data = self.search_from_table_for_edit_delete(*TrackerFileTypeLocators.SEARCH_BUTTON,
                                                              *TrackerFileTypeLocators.SEARCH_INPUT,
                                                              *TrackerFileTypeLocators.COLUMN_DATA_NAME,
@@ -49,6 +52,9 @@ class TrackerFileTypePage(GridComponent):
         time.sleep(3)
         self.edit_catalog_table_entry(found_data, search_data, TrackerFileTypeVariables.file_type_data,
                                       *TrackerFileTypeLocators.SAVE_BUTTON, table_name)
+        time.sleep(2)
+        self.click_button(*TrackerFileTypeLocators.SAVE_BUTTON, 'SAVE')
+        time.sleep(5)
 
     def test_file_type_delete_entry(self):
         table_name = self.get_table_name(*TrackerFileTypeLocators.TABLE_NAME, self.table_name)
