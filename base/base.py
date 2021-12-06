@@ -40,7 +40,7 @@ class Base():
     def __init__(self, browser, url, timeout=10):
         self.browser = browser
         self.url = url
-        # self.wait = WebDriverWait(browser, timeout)
+        self.wait = WebDriverWait(browser, timeout)
         # self.browser.implicitly_wait(timeout)
 
     def open(self):

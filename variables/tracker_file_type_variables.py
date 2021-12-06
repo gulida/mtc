@@ -1,9 +1,9 @@
 class TrackerFileTypeVariables():
     file_type_data = {
-        'search_data': 'test',
-        'FileTypeName': 'Edit_test79997',
-        'FileTypeDescription': 'Edit_test word77',
-        'FileTypeCode': '999',
+        'search_data': 'testtest',
+        'FileTypeName': 'testtest',
+        'FileTypeDescription': 'test',
+        'FileTypeCode': 'test',
     }
 
     new_data = {

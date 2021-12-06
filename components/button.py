@@ -2,7 +2,6 @@ from ..base.base import Base
 from ..base.base import is_element_equal
 from selenium.webdriver.support.color import Color
 from selenium.webdriver.support import expected_conditions as EC
-from selenium.webdriver.support.ui import WebDriverWait
 
 
 class Button(Base):
@@ -28,7 +27,7 @@ class Button(Base):
 
     def click_button(self, how, what, btn):
         if self.is_element_present(how, what):
-            button = WebDriverWait(self.browser, 5).until(EC.element_to_be_clickable((how, what)))
+            button = self.wait.until(EC.element_to_be_clickable((how, what)))
             button.click()
             print(f'{btn} - button was pressed...')
         else:

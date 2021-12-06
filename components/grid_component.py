@@ -1,4 +1,8 @@
 import time
+from .bcolors import BColors
+
+from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.support.ui import WebDriverWait
 
 from ..components.text_box import TextBox
 from ..components.button import Button
@@ -50,9 +54,9 @@ class GridComponent(TextBox, Button, ScrollToElement):
             self.set_textbox_value(how_search_input, what_search_input, ' ', table_name)
             self.set_textbox_value(how_search_input, what_search_input, search_data, table_name)
             next_arrow_flag = True
-            time.sleep(3)
             while next_arrow_flag:
                 found_data = self.browser.find_elements(search_area_how, search_area_what)
+                # found_data = WebDriverWait(self.browser, 5).until(EC.element_to_be_clickable((search_area_how, search_area_what)))
                 for data in found_data:
                     found_data_array.append(data.text)
                 next_button = self.browser.find_element(*TrackerCommonLocators.PAGINATION_NEXT_BUTTON)
@@ -66,13 +70,13 @@ class GridComponent(TextBox, Button, ScrollToElement):
         # If search input field is not available, first press SEARCH button
         elif self.is_element_present(how_search_btn, what_search_btn):
             self.click_button(how_search_btn, what_search_btn, 'SEARCH BUTTON')
-            time.sleep(2)
             if self.is_element_present(how_search_input, what_search_input):
                 self.set_textbox_value(how_search_input, what_search_input, ' ', table_name)
                 self.set_textbox_value(how_search_input, what_search_input, search_data, table_name)
                 next_arrow_flag = True
                 time.sleep(3)
                 while next_arrow_flag:
+                    found_data = self.browser.find_elements(search_area_how, search_area_what)
                     found_data = self.browser.find_elements(search_area_how, search_area_what)
                     for data in found_data:
                         found_data_array.append(data.text)
@@ -162,7 +166,6 @@ class GridComponent(TextBox, Button, ScrollToElement):
         keys = data.keys()
         for key in keys:
             self.set_textbox_value(*form_inputs(key), data[key], element + '_' + str(key))
-        time.sleep(2)
         self.click_button(how, what, element)
         time.sleep(2)
 
@@ -178,29 +181,54 @@ class GridComponent(TextBox, Button, ScrollToElement):
         if len(column_data):
             for i in range(len(column_data)):
                 if column_data[i] == new_entry_data['search_data']:
-                    print('This value is already exists in the table!!!')
+                    print(f'{BColors.WARNING} \nThis value is already exists in the {table_name} table!!!\n')
                     add_flag = False
                     break
         if add_flag:
-            # self.browser.execute_script("window.scrollTo(0, 0);")
-            # element = self.browser.find_element(how_add_btn, what_add_btn)
-            # coordinates = element.location_once_scrolled_into_view  # returns dict of X, Y coordinates
-            # self.browser.execute_script('window.scrollTo({}, {});'.format(coordinates['x'], coordinates['y']))
             self.scroll_to_component(how_add_btn, what_add_btn)
-            time.sleep(2)
             self.click_button(how_add_btn, what_add_btn, f'{table_name} ADD BUTTON')
             time.sleep(2)
             self.add_edit_catalog_data(how_save_btn, what_save_btn, new_entry_data, 'SAVE')
-            print(f'New entry was added to {table_name} table!')
+            # print(f'New entry was added to {table_name} table!')
+
+    def add_new_entry_to_catalog_table(self, how_search_btn, what_search_btn,
+                                       how_search_input, what_search_input,
+                                       search_area_how, search_area_what,
+                                       search_data, how_add_btn, what_add_btn,
+                                       new_entry_data, how_save_btn, what_save_btn,
+                                       table_name):
+        column_data = self.search_from_table(how_search_btn, what_search_btn, how_search_input, what_search_input,
+                                             search_area_how, search_area_what, search_data, table_name)
+        add_flag = True
+        if len(column_data):
+            for i in range(len(column_data)):
+                if column_data[i] == new_entry_data['search_data']:
+                    print(f'{BColors.WARNING} \nThis value is already exists in the {table_name} table!!!\n')
+                    add_flag = False
+                    break
+        if add_flag:
+            self.scroll_to_component(how_add_btn, what_add_btn)
+            self.click_button(how_add_btn, what_add_btn, f'{table_name} ADD BUTTON')
             time.sleep(2)
+            self.add_edit_catalog_data(how_save_btn, what_save_btn, new_entry_data, 'SAVE')
+
+        check_data = self.search_from_table(how_search_btn, what_search_btn, how_search_input, what_search_input,
+                                            search_area_how, search_area_what, search_data, table_name)
+        if len(check_data):
+            for i in range(len(check_data)):
+                if check_data[i] == self.search_data:
+                    print(f'{BColors.OK} \nNew entry was added to {table_name} table!')
+                    check_flag = False
+                    break
+        if add_flag:
+            print(f'{BColors.FAIL} \nNew entry was not added to {table_name} table!')
 
     # How it works:
-    # column_data = self.search_from_table()
     # column_data_collection = self.search_from_table_for_edit_delete()
     # correct_data - json (dictionary in python)  where you have search data and new data
-    def edit_catalog_table_entry(self, column_data, column_data_collection,
+    def edit_catalog_table_entry(self, column_data_collection,
                                  correct_data, how_save_btn, what_save_btn, table_name):
-        if len(column_data):
+        if len(column_data_collection):
             message_flag = True
             break_flag = False
             for keys, items in column_data_collection.items():
@@ -238,12 +266,11 @@ class GridComponent(TextBox, Button, ScrollToElement):
             print(f'{table_name} table does not have any entries to edit.')
 
     # How it works:
-    # column_data = self.search_from_table()
     # column_data_collection = self.search_from_table_for_edit_delete()
     # search data - string
-    def press_edit_button_of_table_entry(self, column_data, column_data_collection,
+    def press_edit_button_of_table_entry(self, column_data_collection,
                                          search_data, table_name):
-        if len(column_data):
+        if len(column_data_collection):
             message_flag = True
             break_flag = False
             for keys, items in column_data_collection.items():
@@ -280,13 +307,12 @@ class GridComponent(TextBox, Button, ScrollToElement):
             print(f'{table_name} table does not have any entries to edit.')
 
     # How it works:
-    # column_data = self.search_from_table()
     # column_data_collection = self.search_from_table_for_edit_delete()
     # search data - string
     # how_alert_ok_btn, what_alert_ok_btn - ACCEPT BUTTON on dialog window
-    def delete_table_entry(self, column_data, column_data_collection, search_data,
+    def delete_table_entry(self, column_data_collection, search_data,
                            how_alert_ok_btn, what_alert_ok_btn, table_name):
-        if len(column_data):
+        if len(column_data_collection):
             message_flag = True
             break_flag = False
             for keys, items in column_data_collection.items():
